@@ -9,6 +9,8 @@ for the iPhone Simulator on Mac OS like ...
 * Start the iPhone Simulator
 * Stop the iPhone Simulator
 
+Some of them are stolen from [RestKit](https://github.com/RestKit/RestKit).
+
 ## Example Usage
 
 You will need to install the gem:
