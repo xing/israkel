@@ -17,13 +17,12 @@ You will need to install the gem:
 
 	gem install israkel
 
-and then require the gem in your projects rake file
+and then your `Rakefile` in your project might look like:
 
 	require 'israkel'
-
-and finally load the rake tasks
-
     ISRakel::Tasks.new
+
+That's it. After that you can just run `rake -T` to list the available tasks.
 
 You can also change the default prefix `simulator`:
 
