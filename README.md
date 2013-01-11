@@ -3,6 +3,9 @@
 This gem is a collection of rake tasks for maintaining common tasks
 for the iPhone Simulator on Mac OS like ...
 
+* Change preferences of the iPhone Simulator
+* Change the language of the iPhone Simulator
+* Reset the iPhone Simulator
 * Start the iPhone Simulator
 * Stop the iPhone Simulator
 
