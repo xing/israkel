@@ -13,4 +13,19 @@ Jeweler::Tasks.new do |gem|
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-ISRakel::Tasks.new
+i = ISRakel::Tasks.new
+desc "Change keyboard preferences"
+task :set_keyboard_preferences do
+  i.edit_preferences do |p|
+    puts p
+    p.merge!({
+      :KeyboardAutocapitalization => false,
+      :KeyboardAutocorrection     => false,
+      :KeyboardCapsLock           => false,
+      :KeyboardCheckSpelling      => false,
+      :KeyboardPeriodShortcut     => false,
+    })
+    puts p
+  end
+end
+
