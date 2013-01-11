@@ -12,6 +12,7 @@ module ISRakel
     def initialize(name = :simulator)
       @name = name
       @sdk_version = ENV['IOS_SDK_VERSION'] || '6.0'
+
       yield self if block_given?
 
       # Make sure all external commands are in the PATH.
@@ -36,16 +37,7 @@ module ISRakel
     def edit_file(file)
       content = plist_to_hash(file)
       yield content
-      puts content
       hash_to_plist(content, file)
-    end
-
-    def edit_global_preferences(&block)
-      edit_file( File.join(simulator_preferences_path, '.GlobalPreferences.plist'), &block )
-    end
-
-    def edit_preferences(&block)
-      edit_file( File.join(simulator_preferences_path, 'com.apple.Preferences.plist'), &block )
     end
 
     def define_reset_task
