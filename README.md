@@ -25,8 +25,8 @@ and finally load the rake tasks
 
 You can also change the default prefix `simulator`:
 
-    ISRakel::Tasks.new do |r|
-      r.name = 'ios'
+    ISRakel::Tasks.new do |i|
+      i.name = 'ios'
     end
 
 ## Edit (global) Preferences
