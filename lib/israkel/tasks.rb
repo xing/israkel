@@ -23,6 +23,14 @@ module ISRakel
       define_stop_task
     end
 
+    def edit_global_preferences(&block)
+      edit_file( File.join(simulator_preferences_path, '.GlobalPreferences.plist'), &block )
+    end
+
+    def edit_preferences(&block)
+      edit_file( File.join(simulator_preferences_path, 'com.apple.Preferences.plist'), &block )
+    end
+
     private
 
     def edit_file(file)
