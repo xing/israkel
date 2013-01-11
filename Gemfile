@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'json', '~> 1.7.6'
 gem 'rake', '~> 0.9.0'
 
 group :development do

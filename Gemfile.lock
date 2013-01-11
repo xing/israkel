@@ -17,4 +17,5 @@ PLATFORMS
 
 DEPENDENCIES
   jeweler (~> 1.8.4)
+  json (~> 1.7.6)
   rake (~> 0.9.0)
