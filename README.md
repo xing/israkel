@@ -40,7 +40,6 @@ tasks to change some settings:
     desc "Change keyboard preferences"
     task :set_keyboard_preferences do
       i.edit_preferences do |p|
-        puts p
         p.merge!({
           :KeyboardAutocapitalization => false,
           :KeyboardAutocorrection     => false,
@@ -48,7 +47,6 @@ tasks to change some settings:
           :KeyboardCheckSpelling      => false,
           :KeyboardPeriodShortcut     => false,
         })
-        puts p
       end
     end
 

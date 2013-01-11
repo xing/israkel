@@ -17,7 +17,6 @@ i = ISRakel::Tasks.new
 desc "Change keyboard preferences"
 task :set_keyboard_preferences do
   i.edit_preferences do |p|
-    puts p
     p.merge!({
       :KeyboardAutocapitalization => false,
       :KeyboardAutocorrection     => false,
@@ -25,7 +24,6 @@ task :set_keyboard_preferences do
       :KeyboardCheckSpelling      => false,
       :KeyboardPeriodShortcut     => false,
     })
-    puts p
   end
 end
 
