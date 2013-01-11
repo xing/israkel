@@ -1,7 +1,7 @@
+require 'fileutils'
 require 'json'
 require 'rake'
 require 'rake/tasklib'
-
 
 module ISRakel
   class Tasks < ::Rake::TaskLib
@@ -17,6 +17,7 @@ module ISRakel
       # Make sure all external commands are in the PATH.
       xcode_path
 
+      define_reset_task
       define_set_language_task
       define_start_task
       define_stop_task
@@ -37,6 +38,13 @@ module ISRakel
 
     def edit_preferences(&block)
       edit_file( File.join(simulator_preferences_path, 'com.apple.Preferences.plist'), &block )
+    end
+
+    def define_reset_task
+      desc "Reset content and settings of the iPhone Simulator"
+      task "#{name}:reset" do
+        rm_rf simulator_support_path
+      end
     end
 
     def define_set_language_task
@@ -84,11 +92,11 @@ module ISRakel
     end
 
     def simulator_preferences_path
-      File.join(simulator_support_path, sdk_version, 'Library', 'Preferences')
+      File.join(simulator_support_path, 'Library', 'Preferences')
     end
 
     def simulator_support_path
-      @simulator_support_path ||= File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator')
+      @simulator_support_path ||= File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator', sdk_version)
     end
 
     def xcode_path
