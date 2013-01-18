@@ -73,7 +73,7 @@ module ISRakel
     def define_stop_task
       desc "Stop the iPhone Simulator"
       task "#{name}:stop" do
-        sh 'killall', '-m', '-KILL', 'iPhone Simulator' do |ok, res|
+        sh 'killall', '-m', '-TERM', 'iPhone Simulator' do |ok, res|
         end
       end
     end
