@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     git (1.2.5)
+    highline (1.6.15)
     jeweler (1.8.4)
       bundler (~> 1.0)
       git (>= 1.2.5)
@@ -16,6 +17,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  highline (~> 1.6.15)
   jeweler (~> 1.8.4)
   json (~> 1.7.6)
   rake (~> 0.9.0)
