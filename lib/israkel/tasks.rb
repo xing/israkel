@@ -1,5 +1,4 @@
 require 'fileutils'
-require 'highline/import'
 require 'json'
 require 'rake'
 require 'rake/tasklib'
@@ -8,10 +7,11 @@ module ISRakel
   class Tasks < ::Rake::TaskLib
     include ::Rake::DSL if defined?(::Rake::DSL)
 
-    attr_accessor :name
+    attr_accessor :name, :sdk_version
 
     def initialize(name = :simulator)
       @name = name
+      @sdk_version = ENV['IOS_SDK_VERSION'] || '6.0'
 
       yield self if block_given?
 
@@ -25,15 +25,11 @@ module ISRakel
     end
 
     def edit_global_preferences(&block)
-      sdk_version_choice do |version|
-        edit_file( File.join(simulator_preferences_path(version), '.GlobalPreferences.plist'), &block )
-      end
+      edit_file( File.join(simulator_preferences_path, '.GlobalPreferences.plist'), &block )
     end
 
     def edit_preferences(&block)
-      sdk_version_choice do |version|
-        edit_file( File.join(simulator_preferences_path(version), 'com.apple.Preferences.plist'), &block )
-      end
+      edit_file( File.join(simulator_preferences_path, 'com.apple.Preferences.plist'), &block )
     end
 
     private
@@ -47,9 +43,7 @@ module ISRakel
     def define_reset_task
       desc "Reset content and settings of the iPhone Simulator"
       task "#{name}:reset" do
-        sdk_version_choice do |version|
-          rm_rf File.join(simulator_support_path(version), '*')
-        end
+        rm_rf simulator_support_path
       end
     end
 
@@ -93,29 +87,15 @@ module ISRakel
       JSON.parse( IO.popen(['plutil', '-convert', 'json', '-o', '-', path]) {|f| f.read} )
     end
 
-    def sdk_version_choice
-      if ENV['IOS_SDK_VERSION']
-        yield ENV['IOS_SDK_VERSION']
-        return
-      end
-      versions = Dir[File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator', '*')].map {|dir| File.basename(dir)}
-      choose do |menu|
-        menu.prompt = "Please select an SDK version"
-        menu.choices(*versions) do |version|
-          yield version
-        end
-      end
-    end
-
     def simulator_path
       @simulator_path ||= File.join(xcode_path, 'Platforms', 'iPhoneSimulator.platform', 'Developer', 'Applications', 'iPhone Simulator.app')
     end
 
-    def simulator_preferences_path(sdk_version)
-      File.join(simulator_support_path(sdk_version), 'Library', 'Preferences')
+    def simulator_preferences_path
+      File.join(simulator_support_path, 'Library', 'Preferences')
     end
 
-    def simulator_support_path(sdk_version)
+    def simulator_support_path
       @simulator_support_path ||= File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator', sdk_version)
     end
 
