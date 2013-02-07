@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'highline/import'
 require 'json'
 require 'rake'
 require 'rake/tasklib'
@@ -11,12 +12,12 @@ module ISRakel
 
     def initialize(name = :simulator)
       @name = name
-      @sdk_version = ENV['IOS_SDK_VERSION'] || '6.0'
 
       yield self if block_given?
 
       # Make sure all external commands are in the PATH.
       xcode_path
+      ios_sim_path
 
       define_reset_task
       define_set_language_task
@@ -25,11 +26,21 @@ module ISRakel
     end
 
     def edit_global_preferences(&block)
+      unless sdk_version.to_f >= 6.0
+        abort "ERROR: edit_global_preferences is only supported for iOS SDK >= 6.0"
+      end
       edit_file( File.join(simulator_preferences_path, '.GlobalPreferences.plist'), &block )
     end
 
     def edit_preferences(&block)
+      unless sdk_version.to_f >= 6.0
+        abort "ERROR: edit_preferences is only supported for iOS SDK >= 6.0"
+      end
       edit_file( File.join(simulator_preferences_path, 'com.apple.Preferences.plist'), &block )
+    end
+
+    def sdk_version
+      @sdk_version ||= select_sdk_version
     end
 
     private
@@ -43,7 +54,7 @@ module ISRakel
     def define_reset_task
       desc "Reset content and settings of the iPhone Simulator"
       task "#{name}:reset" do
-        rm_rf simulator_support_path
+        rm_rf File.join(simulator_support_path)
       end
     end
 
@@ -66,7 +77,7 @@ module ISRakel
     def define_start_task
       desc "Start the iPhone Simulator"
       task "#{name}:start" do
-        sh 'open', '-g', simulator_path
+        sh 'ios-sim', 'start', '--sdk', sdk_version
       end
     end
 
@@ -83,8 +94,30 @@ module ISRakel
       cmd.puts hash.to_json
     end
 
+    def ios_sim_path
+      @ios_sim_path ||= `which ios-sim`.chomp
+    end
+
     def plist_to_hash(path)
       JSON.parse( IO.popen(['plutil', '-convert', 'json', '-o', '-', path]) {|f| f.read} )
+    end
+
+    def sdk_versions
+      versions = `#{ios_sim_path} showsdks 2>&1`.split("\n").find_all {|version| version =~ /Simulator - iOS (\d\.\d)/ }
+      versions.each {|version| version.gsub!(/.*?Simulator - iOS (\d.\d).*?$/, '\1')}
+      versions
+    end
+
+    def select_sdk_version
+      result = ENV['IOS_SDK_VERSION']
+      return result unless result.nil?
+      choose do |menu|
+        menu.prompt = "Please select an SDK version"
+        menu.choices(*sdk_versions) do |version|
+          result = version
+        end
+      end
+      result
     end
 
     def simulator_path

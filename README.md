@@ -11,6 +11,16 @@ for the iPhone Simulator on Mac OS like ...
 
 Some of them are stolen from [RestKit](https://github.com/RestKit/RestKit).
 
+## Dependencies
+
+Besides the gem dependencies, that are automatically resolved and
+installed via bundler, there's only one external dependency to the
+[ios-sim](https://github.com/phonegap/ios-sim) binary. The most
+convenient way to install it is via
+[homebrew](http://mxcl.github.com/homebrew/):
+
+    brew install ios-sim
+
 ## Example Usage
 
 You will need to install the gem:
