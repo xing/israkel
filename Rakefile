@@ -27,3 +27,7 @@ task :set_keyboard_preferences do
   end
 end
 
+desc "Allow GPS access"
+task :allow_gps_access do
+  i.allow_gps_access("com.plu.FooApp")
+end

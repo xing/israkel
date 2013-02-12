@@ -21,6 +21,22 @@ module ISRakel
       define_stop_task
     end
 
+    def allow_gps_access(bundle_id)
+      directory = File.join(simulator_support_path, 'Library', 'Caches', 'locationd')
+      FileUtils.mkdir_p(directory) unless Dir.exists?(directory)
+      edit_file( File.join(directory, 'clients.plist') ) do |content|
+        content.merge!({
+          bundle_id => {
+            :Authorized  => true,
+            :BundleId    => bundle_id,
+            :Executable  => "",
+            :Registered  => "",
+            :Whitelisted => false,
+          }
+        })
+      end
+    end
+
     def edit_global_preferences(&block)
       unless sdk_version.to_f >= 6.0
         abort "ERROR: edit_global_preferences is only supported for iOS SDK >= 6.0"
@@ -42,7 +58,10 @@ module ISRakel
     private
 
     def edit_file(file)
-      content = plist_to_hash(file)
+      content = {}
+      if File.exists?(file)
+        content = plist_to_hash(file)
+      end
       yield content
       hash_to_plist(content, file)
     end
