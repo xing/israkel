@@ -55,6 +55,15 @@ module ISRakel
       @sdk_version ||= select_sdk_version
     end
 
+    def set_language(language)
+      edit_global_preferences do |p|
+        unless p['AppleLanguages'].include?(language)
+          fail "#{language} is not a valid language"
+        end
+        p['AppleLanguages'].unshift(language).uniq!
+      end
+    end
+
     private
 
     def edit_file(file)
@@ -80,12 +89,7 @@ module ISRakel
         if language.nil?
           fail "You must set the IOS_LANG environment variable"
         end
-        edit_global_preferences do |p|
-          unless p['AppleLanguages'].include?(language)
-            fail "#{language} is not a valid language"
-          end
-          p['AppleLanguages'].unshift(language).uniq!
-        end
+        set_language(language)
       end
     end
 
