@@ -15,10 +15,6 @@ module ISRakel
 
       yield self if block_given?
 
-      # Make sure all external commands are in the PATH.
-      xcode_path
-      ios_sim_path
-
       define_reset_task
       define_set_language_task
       define_start_task
