@@ -107,6 +107,7 @@ module ISRakel
     def hash_to_plist(hash, path)
       cmd = IO.popen(['plutil', '-convert', 'binary1', '-o', path, '-'], 'w')
       cmd.puts hash.to_json
+      cmd.close
     end
 
     def ios_sim_path
