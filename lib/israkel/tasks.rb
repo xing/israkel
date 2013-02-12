@@ -96,6 +96,7 @@ module ISRakel
 
     def ios_sim_path
       @ios_sim_path ||= `which ios-sim`.chomp
+      abort "please install ios-sim" if @ios_sim_path.empty?
     end
 
     def plist_to_hash(path)
@@ -134,6 +135,7 @@ module ISRakel
 
     def xcode_path
       @xcode_path ||= `xcode-select --print-path`.chomp
+      abort "please install xcode and the command line tools" if @xcode_path.empty?
     end
 
   end
