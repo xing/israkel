@@ -59,6 +59,9 @@ tasks to change some settings:
       end
     end
 
+There's a second method called `edit_global_preferences` which works
+the same, just edits a different file.
+
 ## Allow GPS access
 
 Allowing GPS access upfront can be required because it's not possible
@@ -69,9 +72,6 @@ to use KIF to tap on the OK button the the GPS access alert view.
     task :allow_gps_access do
       i.allow_gps_access("com.plu.FooApp")
     end
-
-There's a second method called `edit_global_preferences` which works
-the same, just edits a different file.
 
 ## Feedback
 
