@@ -9,7 +9,7 @@ GEM
       rake
       rdoc
     json (1.7.6)
-    rake (0.9.6)
+    rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
 
@@ -20,4 +20,4 @@ DEPENDENCIES
   highline (~> 1.6.15)
   jeweler (~> 1.8.4)
   json (~> 1.7.6)
-  rake (~> 0.9.0)
+  rake (~> 10.0.0)
