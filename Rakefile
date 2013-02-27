@@ -4,12 +4,12 @@ require 'israkel'
 
 Jeweler::Tasks.new do |gem|
   gem.name = 'israkel'
-  gem.homepage = 'http://github.com/plu/israkel'
+  gem.homepage = 'http://github.com/xing/israkel'
   gem.license = 'MIT'
   gem.summary = %Q{Collection of common rake tasks for the iPhone Simulator.}
   gem.description = %Q{Collection of common rake tasks for the iPhone Simulator like start/stop and some more.}
-  gem.email = 'plu@pqpq.de'
-  gem.authors = ['Johannes Plunien']
+  gem.email = ['johannes.plunien@xing.com', 'stefan.munz@xing.com']
+  gem.authors = ['Johannes Plunien', 'Stefan Munz']
 end
 Jeweler::RubygemsDotOrgTasks.new
 

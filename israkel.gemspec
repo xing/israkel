@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.version = "0.2.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Johannes Plunien"]
-  s.date = "2013-02-24"
+  s.authors = ["Johannes Plunien", "Stefan Munz"]
+  s.date = "2013-02-27"
   s.description = "Collection of common rake tasks for the iPhone Simulator like start/stop and some more."
-  s.email = "plu@pqpq.de"
+  s.email = ["johannes.plunien@xing.com", "stefan.munz@xing.com"]
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
     "lib/israkel.rb",
     "lib/israkel/tasks.rb"
   ]
-  s.homepage = "http://github.com/plu/israkel"
+  s.homepage = "http://github.com/xing/israkel"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
