@@ -65,6 +65,18 @@ module ISRakel
       end
     end
 
+    def simulator_path
+      @simulator_path ||= File.join(xcode_path, 'Platforms', 'iPhoneSimulator.platform', 'Developer', 'Applications', 'iPhone Simulator.app')
+    end
+
+    def simulator_preferences_path
+      File.join(simulator_support_path, 'Library', 'Preferences')
+    end
+
+    def simulator_support_path
+      @simulator_support_path ||= File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator', sdk_version)
+    end
+
     private
 
     def edit_file(file)
@@ -152,18 +164,6 @@ module ISRakel
         end
       end
       result
-    end
-
-    def simulator_path
-      @simulator_path ||= File.join(xcode_path, 'Platforms', 'iPhoneSimulator.platform', 'Developer', 'Applications', 'iPhone Simulator.app')
-    end
-
-    def simulator_preferences_path
-      File.join(simulator_support_path, 'Library', 'Preferences')
-    end
-
-    def simulator_support_path
-      @simulator_support_path ||= File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator', sdk_version)
     end
 
     def xcode_path
