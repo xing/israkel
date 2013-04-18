@@ -43,9 +43,6 @@ module ISRakel
     end
 
     def edit_preferences(&block)
-      unless sdk_version.to_f >= 6.0
-        abort "ERROR: edit_preferences is only supported for iOS SDK >= 6.0"
-      end
       edit_file( File.join(simulator_preferences_path, 'com.apple.Preferences.plist'), &block )
     end
 
