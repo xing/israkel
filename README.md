@@ -30,13 +30,13 @@ You will need to install the gem:
 and then your `Rakefile` in your project might look like:
 
 	require 'israkel'
-    ISRakel::Tasks.new
+    ISRakel::Tasks.instance
 
 That's it. After that you can just run `rake -T` to list the available tasks.
 
 You can also change the default prefix `simulator`:
 
-    ISRakel::Tasks.new do |i|
+    ISRakel::Tasks.instance do |i|
       i.name = 'ios'
     end
 
@@ -45,7 +45,7 @@ You can also change the default prefix `simulator`:
 There are binary plist files that you can edit with your custom rake
 tasks to change some settings:
 
-    i = ISRakel::Tasks.new
+    i = ISRakel::Tasks.instance
     desc "Change keyboard preferences"
     task :set_keyboard_preferences do
       i.edit_preferences do |p|
@@ -67,7 +67,7 @@ the same, just edits a different file.
 Allowing GPS access upfront can be required because it's not possible
 to use KIF to tap on the OK button the the GPS access alert view.
 
-    i = ISRakel::Tasks.new
+    i = ISRakel::Tasks.instance
     desc "Allow GPS access"
     task :allow_gps_access do
       i.allow_gps_access("com.plu.FooApp")

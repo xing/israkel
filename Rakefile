@@ -13,7 +13,7 @@ Jeweler::Tasks.new do |gem|
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-i = ISRakel::Tasks.new
+i = ISRakel::Tasks.instance
 desc "Change keyboard preferences"
 task :set_keyboard_preferences do
   i.edit_preferences do |p|

@@ -7,6 +7,7 @@ require 'rake/tasklib'
 module ISRakel
   class Tasks < ::Rake::TaskLib
     include ::Rake::DSL if defined?(::Rake::DSL)
+    include Singleton
 
     attr_accessor :name, :sdk_version
 
