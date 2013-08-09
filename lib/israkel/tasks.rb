@@ -115,7 +115,7 @@ module ISRakel
     def define_start_task
       desc "Start the iPhone Simulator"
       task "#{name}:start" do
-        sh 'ios-sim', 'start', '--sdk', sdk_version
+        sh 'ios-sim', 'start', '--retina', '--sdk', sdk_version
       end
     end
 
