@@ -3,6 +3,7 @@ require 'highline/import'
 require 'json'
 require 'rake'
 require 'rake/tasklib'
+require 'sqlite3'
 
 module ISRakel
   class Tasks < ::Rake::TaskLib
@@ -21,6 +22,14 @@ module ISRakel
       define_set_language_task
       define_start_task
       define_stop_task
+    end
+
+    def allow_addressbook_access(bundle_id)
+      db_path = File.join(simulator_support_path, 'Library', 'TCC', 'TCC.db')
+      db = SQLite3::Database.new(db_path)
+      db.prepare "insert into access (service, client, client_type, allowed, prompt_count, csreq) values (?, ?, ?, ?, ?, ?)" do |query|
+        query.execute "kTCCServiceAddressBook", bundle_id, 0, 1, 0, ""
+      end
     end
 
     def allow_gps_access(bundle_id)

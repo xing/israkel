@@ -31,3 +31,8 @@ desc "Allow GPS access"
 task :allow_gps_access do
   i.allow_gps_access("com.plu.FooApp")
 end
+
+desc "Allow Addressbook access"
+task :allow_ab_access do
+  i.allow_addressbook_access("com.plu.FooApp")
+end
