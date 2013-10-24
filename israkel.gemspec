@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "israkel"
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johannes Plunien", "Stefan Munz"]
-  s.date = "2013-09-18"
+  s.date = "2013-10-24"
   s.description = "Collection of common rake tasks for the iPhone Simulator like start/stop and some more."
   s.email = ["johannes.plunien@xing.com", "stefan.munz@xing.com"]
   s.extra_rdoc_files = [
@@ -28,11 +28,11 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/xing/israkel"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
+  s.rubygems_version = "2.0.7"
   s.summary = "Collection of common rake tasks for the iPhone Simulator."
 
   if s.respond_to? :specification_version then
-    s.specification_version = 3
+    s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<highline>, ["~> 1.6.15"])
