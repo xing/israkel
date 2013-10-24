@@ -78,10 +78,14 @@ module ISRakel
     end
 
     def simulator_support_path
-      @simulator_support_path ||= File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator', sdk_version)
+      @simulator_support_path ||= File.join(simulator_root_path, sdk_version)
     end
 
     private
+
+    def simulator_root_path
+      File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator')
+    end
 
     def edit_file(file)
       content = {}
@@ -107,6 +111,7 @@ module ISRakel
       desc "Reset content and settings of the iPhone Simulator"
       task "#{name}:reset" do
         rm_rf File.join(simulator_support_path)
+        mkdir File.join(simulator_support_path)
       end
     end
 
@@ -153,8 +158,7 @@ module ISRakel
     end
 
     def simulator_versions
-      dir = File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator')     
-      versions = Dir.entries(dir).reject {|e| File.directory?(e)}
+      versions = Dir.entries(simulator_root_path).reject {|e| File.directory?(e)}
       versions.select { |sim_path| sim_path != 'User' }
     end
 
