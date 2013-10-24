@@ -152,10 +152,10 @@ module ISRakel
       JSON.parse( IO.popen(['plutil', '-convert', 'json', '-o', '-', path]) {|f| f.read} )
     end
 
-    def sdk_versions
-      versions = `#{ios_sim_path} showsdks 2>&1`.split("\n").find_all {|version| version =~ /Simulator - iOS (\d\.\d)/ }
-      versions.each {|version| version.gsub!(/.*?Simulator - iOS (\d.\d).*?$/, '\1')}
-      versions
+    def simulator_versions
+      dir = File.join(ENV['HOME'], 'Library', 'Application Support', 'iPhone Simulator')     
+      versions = Dir.entries(dir).reject {|e| File.directory?(e)}
+      versions.select { |sim_path| sim_path != 'User' }
     end
 
     def select_sdk_version
@@ -163,7 +163,7 @@ module ISRakel
       return result unless result.nil?
       choose do |menu|
         menu.prompt = "Please select an SDK version"
-        menu.choices(*sdk_versions) do |version|
+        menu.choices(*simulator_versions) do |version|
           result = version
         end
       end
