@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
   s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Johannes Plunien", "Stefan Munz", "Piet Brauer"]
-  s.date = "2013-10-24"
+  s.authors = ["Johannes Plunien", "Stefan Munz"]
+  s.date = "2013-11-11"
   s.description = "Collection of common rake tasks for the iPhone Simulator like start/stop and some more."
-  s.email = ["johannes.plunien@xing.com", "stefan.munz@xing.com", "piet.brauer@xing.com"]
+  s.email = ["johannes.plunien@xing.com", "stefan.munz@xing.com"]
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/xing/israkel"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.1.9"
+  s.rubygems_version = "2.1.10"
   s.summary = "Collection of common rake tasks for the iPhone Simulator."
 
   if s.respond_to? :specification_version then
