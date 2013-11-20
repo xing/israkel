@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "israkel"
-  s.version = "0.4.1"
+  s.version = "0.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johannes Plunien", "Stefan Munz"]
-  s.date = "2013-11-11"
+  s.date = "2013-11-20"
   s.description = "Collection of common rake tasks for the iPhone Simulator like start/stop and some more."
   s.email = ["johannes.plunien@xing.com", "stefan.munz@xing.com"]
   s.extra_rdoc_files = [
