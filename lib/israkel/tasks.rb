@@ -110,10 +110,15 @@ module ISRakel
     def define_reset_task
       desc "Reset content and settings of the iPhone Simulator"
       task "#{name}:reset" do
-        rm_rf File.join(simulator_support_path)
-        mkdir File.join(simulator_support_path)
+        reset_simulator
       end
     end
+
+    def reset_simulator
+      rm_rf File.join(simulator_support_path)
+      mkdir File.join(simulator_support_path)
+    end
+
 
     def define_set_language_task
       desc "Set the system language (via IOS_LANG environment variable)"
@@ -129,18 +134,27 @@ module ISRakel
     def define_start_task
       desc "Start the iPhone Simulator"
       task "#{name}:start" do
-        # shorten the sdk_version to the first three characters, else ios-sim does not get it
-        sh 'ios-sim', 'start', '--retina', '--sdk', sdk_version[0..2]
+        start_simulator
       end
+    end
+
+    def start_simulator
+      # shorten the sdk_version to the first three characters, else ios-sim does not get it
+      sh 'ios-sim', 'start', '--retina', '--sdk', sdk_version[0..2]
     end
 
     def define_stop_task
       desc "Stop the iPhone Simulator"
       task "#{name}:stop" do
-        sh 'killall', '-m', '-TERM', 'iPhone Simulator' do |ok, res|
-        end
+        stop_simulator
       end
     end
+
+    def stop_simulator
+      sh 'killall', '-m', '-TERM', 'iPhone Simulator' do |ok, res|
+      end
+    end
+
 
     def hash_to_plist(hash, path)
       cmd = IO.popen(['plutil', '-convert', 'binary1', '-o', path, '-'], 'w')
