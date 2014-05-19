@@ -62,16 +62,33 @@ tasks to change some settings:
 There's a second method called `edit_global_preferences` which works
 the same, just edits a different file.
 
-## Allow GPS access
+## Authorize access to addressbook, gps and photos
 
-Allowing GPS access upfront can be required because it's not possible
-to use KIF to tap on the OK button the the GPS access alert view.
+Allowing access upfront can be required because it's not possible
+to use KIF to tap on the OK button of the access alert views.
 
     i = ISRakel::Tasks.instance
-    desc "Allow GPS access"
-    task :allow_gps_access do
-      i.allow_gps_access("com.plu.FooApp")
+
+    desc 'Allow AddressBook access'
+    task :allow_addressbook_access do
+      i.allow_addressbook_access('com.xing.App')
     end
+
+    desc 'Allow GPS access'
+    task :allow_gps_access do
+      i.allow_gps_access('com.xing.App')
+    end
+
+    desc 'Allow Photo Library access'
+    task :allow_photos_access do
+      i.allow_photos_access('com.xing.App')
+    end
+
+Even easier, you don't have to define the rake tasks in your Rakefile.
+There are generic tasks that take the environment variable `BUNDLE_ID`
+into account:
+
+    IOS_SDK_VERSION=7.1 BUNDLE_ID=com.example.apple-samplecode.PhotoPicker rake simulator:allow_photos_access
 
 ## Feedback
 
