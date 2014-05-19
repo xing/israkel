@@ -17,6 +17,7 @@ module ISRakel
 
       yield self if block_given?
 
+      define_allow_addressbook_access_task
       define_allow_gps_access_task
       define_allow_photos_access_task
       define_reset_task
@@ -103,6 +104,17 @@ module ISRakel
       end
       yield content
       hash_to_plist(content, file)
+    end
+
+    def define_allow_addressbook_access_task
+      desc "Allow AdressBook access (via BUNDLE_ID environment variable)"
+      task "#{name}:allow_addressbook_access" do
+        bundle_id = ENV['BUNDLE_ID']
+        if bundle_id.nil?
+          fail "You must set the BUNDLE_ID environment variable"
+        end
+        allow_addressbook_access(bundle_id)
+      end
     end
 
     def define_allow_gps_access_task
