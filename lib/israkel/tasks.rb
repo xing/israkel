@@ -12,8 +12,9 @@ module ISRakel
 
     attr_accessor :name, :sdk_version
 
-    def initialize(name = :simulator)
+    def initialize(name = :simulator, sdk_version = nil)
       @name = name
+      @sdk_version = sdk_version
 
       yield self if block_given?
 
