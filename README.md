@@ -1,5 +1,9 @@
 # ISRakel
 
+[![Build Status](http://img.shields.io/travis/xing/israkel/master.svg?style=flat-square)](https://travis-ci.org/xing/israkel)
+[![Code Coverage](http://img.shields.io/coveralls/xing/israkel.svg?style=flat-square)](https://coveralls.io/r/xing/israkel)
+
+
 This gem is a collection of rake tasks for maintaining common tasks
 for the iPhone Simulator on Mac OS like ...
 
