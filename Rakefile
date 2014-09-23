@@ -41,3 +41,8 @@ desc 'Allow Photo Library access'
 task :allow_photos_access do
   i.allow_photos_access('com.xing.App')
 end
+
+desc 'Run the tests'
+task :spec do
+  sh "rspec spec/"
+end
