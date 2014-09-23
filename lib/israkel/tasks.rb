@@ -27,7 +27,7 @@ module ISRakel
     def bundle_id
       bundle_id = ENV['BUNDLE_ID']
       if bundle_id.nil?
-        fail "You must set the BUNDLE_ID environment variable"
+        raise "You must set the BUNDLE_ID environment variable"
       end
       bundle_id
     end
@@ -35,7 +35,7 @@ module ISRakel
     def ios_lang
       language = ENV['IOS_LANG']
       if language.nil?
-        fail "You must set the IOS_LANG environment variable"
+        raise "You must set the IOS_LANG environment variable"
       end
       language
     end
@@ -71,7 +71,7 @@ module ISRakel
     def define_set_language_task
       desc "Set the system language (via IOS_LANG environment variable)"
       task "#{name}:set_language" do
-        @device_chosen.set_language(language)
+        @device_chosen.set_language(ios_lang)
       end
     end
 
