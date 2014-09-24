@@ -2,6 +2,7 @@ require 'cfpropertylist'
 require 'fileutils'
 
 class Device
+  include FileUtils
   extend FileUtils
 
   attr_accessor :UUID, :type, :name, :state, :runtime
@@ -76,7 +77,7 @@ class Device
   end
 
   def start
-    sh 'ios-sim', 'start', '--devicetypeid', "\"#{device_type}\""
+    sh "ios-sim start --devicetypeid \"#{device_type}\""
   end
 
   def reset
