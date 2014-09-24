@@ -20,10 +20,21 @@ class Device
     self.from_hash(CFPropertyList.native_types(plist.value))
   end
 
+  def self.with_sdk_version(sdk_version)
+    Device.all.each do |device|
+      return device if device.os == sdk_version
+    end
+    nil
+  end
+
+  def self.stop
+    exec 'killall', '-m', '-TERM', 'iOS Simulator'
+  end
+
   def self.all
     devices = []
     dirs = Dir.entries(Device.sim_root_path).reject { |entry| File.directory? entry }
-    dirs.each do |simulator_dir|
+    dirs.sort.each do |simulator_dir|
       plist_path = "#{Device.sim_root_path}/#{simulator_dir}/device.plist"
       if File.exists?(plist_path)
         plist = CFPropertyList::List.new(:file => plist_path)
@@ -63,11 +74,7 @@ class Device
   end
 
   def start
-    sh 'ios-sim', 'start', '--devicetypeid', "\"#{device_type}\""
-  end
-
-  def stop
-    sh 'killall', '-m', '-TERM', 'iPhone Simulator'
+    exec "ios-sim start --devicetypeid \"#{device_type}\""
   end
 
   def reset
@@ -79,12 +86,16 @@ class Device
     File.join(ENV['HOME'], 'Library', 'Developer', 'CoreSimulator', 'Devices')
   end
 
-  private
+  def os
+    runtime.gsub('com.apple.CoreSimulator.SimRuntime.iOS-', '').gsub('-', '.')
+  end
 
   def edit_global_preferences(&block)
     pref_path = File.join(path, 'Library', 'Preferences')
     Helper.edit_plist( File.join(pref_path, '.GlobalPreferences.plist'), &block )
   end
+
+  private
 
   def set_gps_access(hash, bundle_id)
     hash.merge!({
@@ -108,10 +119,6 @@ class Device
 
   def pretty_runtime
     "iOS #{os}"
-  end
-
-  def os
-    runtime.gsub('com.apple.CoreSimulator.SimRuntime.iOS-', '').gsub('-', '.')
   end
 
   def path

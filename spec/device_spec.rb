@@ -33,6 +33,27 @@ describe Device do
       expect(subject.runtime).to eq('com.apple.CoreSimulator.SimRuntime.iOS-8-0')
       expect(subject.state).to eq(1)
     end
+
+    describe "#with_sdk_version" do
+      before do
+        allow(Device).to receive(:sim_root_path) { File.join('spec', 'fixtures', 'sim_root_path') }
+      end
+
+      it "returns device if one is found" do
+        subject = Device.with_sdk_version('8.0')
+
+        expect(subject.UUID).to eq('EFA1B4B1-5741-4396-AF52-F8AD29229CFC')
+        expect(subject.type).to eq('com.apple.CoreSimulator.SimDeviceType.iPhone-4s')
+        expect(subject.name).to eq('iPhone 4s')
+        expect(subject.runtime).to eq('com.apple.CoreSimulator.SimRuntime.iOS-8-0')
+        expect(subject.state).to eq(1)
+      end
+
+      it "returns nil if nothing is found" do
+        subject = Device.with_sdk_version('6.0')
+        expect(subject).to be_nil
+      end
+    end
   end
 
   context "class methods" do
@@ -42,13 +63,18 @@ describe Device do
       end
 
       it "returns correct number of devices" do
-        expect(Device.all.count).to eq(1)
+        expect(Device.all.count).to eq(2)
       end
 
       it "returns valid device instances" do
         subject = Device.all.first
         expect(subject.UUID).to eq("61C01D44-431C-11E4-9BFF-20C9D08353AF")
       end
+    end
+
+    it "#stop" do
+      expect(Device).to receive(:exec).with('killall', '-m', '-TERM', 'iOS Simulator')
+      Device.stop
     end
 
     it "#sim_root_path" do
@@ -107,6 +133,12 @@ describe Device do
         @subject.set_language("de_DE")
         expect(hash).to eq({'AppleLanguages' => ['de_DE', 'en_US'] })
       end
+
+      it "fails if language is invalid" do
+        hash = { 'AppleLanguages' => ['fr'] }
+        expect(@subject).to receive(:edit_global_preferences).and_yield hash
+        expect { @subject.set_language("de_DE") }.to raise_error(RuntimeError, "de_DE is not a valid language")
+      end
     end
   end
 
@@ -118,13 +150,8 @@ describe Device do
     end
 
     it "#start" do
-      expect(@subject).to receive(:sh).with('ios-sim', 'start', '--devicetypeid', "\"com.apple.CoreSimulator.SimDeviceType.iPhone-4s, 8.0\"")
+      expect(@subject).to receive(:exec).with("ios-sim start --devicetypeid \"com.apple.CoreSimulator.SimDeviceType.iPhone-4s, 8.0\"")
       @subject.start
-    end
-
-    it "#stop" do
-      expect(@subject).to receive(:sh).with('killall', '-m', '-TERM', 'iPhone Simulator')
-      @subject.stop
     end
 
     it "#reset" do
@@ -132,6 +159,14 @@ describe Device do
       expect(@subject).to receive(:rm_rf).with(sim_path)
       expect(@subject).to receive(:mkdir).with(sim_path)
       @subject.reset
+    end
+  end
+
+  context "other public methods" do
+    before { @subject = Device.from_hash(@hash) }
+
+    it "#os" do
+      expect(@subject.os).to eq('8.0')
     end
   end
 
@@ -148,9 +183,6 @@ describe Device do
       expect(@subject.send(:pretty_runtime)).to eq('iOS 8.0')
     end
 
-    it "#os" do
-      expect(@subject.send(:os)).to eq('8.0')
-    end
 
     it "#path" do
       expect(@subject.send(:path)).to eq("#{ENV['HOME']}/Library/Developer/CoreSimulator/Devices/EFA1B4B1-5741-4396-AF52-F8AD29229CFC/data")
