@@ -32,7 +32,8 @@ describe Tasks do
   end
 
   it "stops the simulator" do
-    expect(@subject).to receive(:stop)
+    allow(Device).to receive(:stop)
+    expect(Device).to receive(:stop)
     Rake::Task["simulator:stop"].invoke
   end
 

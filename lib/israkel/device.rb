@@ -2,7 +2,7 @@ require 'cfpropertylist'
 require 'fileutils'
 
 class Device
-  include FileUtils
+  extend FileUtils
 
   attr_accessor :UUID, :type, :name, :state, :runtime
 
@@ -27,6 +27,10 @@ class Device
       return device if device.os == sdk_version
     end
     nil
+  end
+
+  def self.stop
+    sh 'killall', '-m', '-TERM', 'iOS Simulator'
   end
 
   def self.all
@@ -73,10 +77,6 @@ class Device
 
   def start
     sh 'ios-sim', 'start', '--devicetypeid', "\"#{device_type}\""
-  end
-
-  def stop
-    sh 'killall', '-m', '-TERM', 'iOS Simulator'
   end
 
   def reset

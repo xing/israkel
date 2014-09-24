@@ -72,6 +72,11 @@ describe Device do
       end
     end
 
+    it "#stop" do
+      expect(Device).to receive(:sh).with('killall', '-m', '-TERM', 'iOS Simulator')
+      Device.stop
+    end
+
     it "#sim_root_path" do
       expect(Device.sim_root_path).to eq("#{ENV['HOME']}/Library/Developer/CoreSimulator/Devices")
     end
@@ -141,11 +146,6 @@ describe Device do
     it "#start" do
       expect(@subject).to receive(:sh).with('ios-sim', 'start', '--devicetypeid', "\"com.apple.CoreSimulator.SimDeviceType.iPhone-4s, 8.0\"")
       @subject.start
-    end
-
-    it "#stop" do
-      expect(@subject).to receive(:sh).with('killall', '-m', '-TERM', 'iOS Simulator')
-      @subject.stop
     end
 
     it "#reset" do

@@ -86,7 +86,7 @@ module ISRakel
     def define_stop_task
       desc "Stop the iPhone Simulator"
       task "#{name}:stop" do
-        @device_chosen.stop
+        Device.stop
       end
     end
 
