@@ -33,6 +33,27 @@ describe Device do
       expect(subject.runtime).to eq('com.apple.CoreSimulator.SimRuntime.iOS-8-0')
       expect(subject.state).to eq(1)
     end
+
+    describe "#with_sdk_version" do
+      before do
+        allow(Device).to receive(:sim_root_path) { File.join('spec', 'fixtures', 'sim_root_path') }
+      end
+
+      it "returns device if one is found" do
+        subject = Device.with_sdk_version('8.0')
+
+        expect(subject.UUID).to eq('EFA1B4B1-5741-4396-AF52-F8AD29229CFC')
+        expect(subject.type).to eq('com.apple.CoreSimulator.SimDeviceType.iPhone-4s')
+        expect(subject.name).to eq('iPhone 4s')
+        expect(subject.runtime).to eq('com.apple.CoreSimulator.SimRuntime.iOS-8-0')
+        expect(subject.state).to eq(1)
+      end
+
+      it "returns nil if nothing is found" do
+        subject = Device.with_sdk_version('6.0')
+        expect(subject).to be_nil
+      end
+    end
   end
 
   context "class methods" do
@@ -42,7 +63,7 @@ describe Device do
       end
 
       it "returns correct number of devices" do
-        expect(Device.all.count).to eq(1)
+        expect(Device.all.count).to eq(2)
       end
 
       it "returns valid device instances" do
@@ -135,6 +156,14 @@ describe Device do
     end
   end
 
+  context "other public methods" do
+    before { @subject = Device.from_hash(@hash) }
+
+    it "#os" do
+      expect(@subject.os).to eq('8.0')
+    end
+  end
+
   context "private methods" do
     before do
       @subject = Device.from_hash(@hash)
@@ -148,9 +177,6 @@ describe Device do
       expect(@subject.send(:pretty_runtime)).to eq('iOS 8.0')
     end
 
-    it "#os" do
-      expect(@subject.send(:os)).to eq('8.0')
-    end
 
     it "#path" do
       expect(@subject.send(:path)).to eq("#{ENV['HOME']}/Library/Developer/CoreSimulator/Devices/EFA1B4B1-5741-4396-AF52-F8AD29229CFC/data")

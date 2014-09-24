@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/tasklib'
+require 'highline/import'
 
 module ISRakel
   class Tasks < ::Rake::TaskLib
@@ -90,9 +91,9 @@ module ISRakel
     end
 
     def select_device
-      # TODO: handle ENV variable
-      # result = ENV['IOS_SDK_VERSION']
-      # return result unless result.nil?
+      sdk_version = ENV['IOS_SDK_VERSION']
+      @device_chosen = Device.with_sdk_version(sdk_version)
+      return @device_chosen if @device_chosen
       choose do |menu|
         menu.prompt = "Please select a simulator"
         menu.choices(*Device.all) do |device|
