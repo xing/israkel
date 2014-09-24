@@ -1,6 +1,8 @@
 require 'cfpropertylist'
+require 'fileutils'
 
 class Device
+  include FileUtils
 
   attr_accessor :UUID, :type, :name, :state, :runtime
 
