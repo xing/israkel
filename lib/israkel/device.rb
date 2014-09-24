@@ -1,4 +1,5 @@
 require 'cfpropertylist'
+require 'sqlite3'
 
 class Device
 
