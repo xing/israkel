@@ -74,7 +74,7 @@ class Device
   end
 
   def stop
-    sh 'killall', '-m', '-TERM', 'iPhone Simulator'
+    sh 'killall', '-m', '-TERM', 'iOS Simulator'
   end
 
   def reset
