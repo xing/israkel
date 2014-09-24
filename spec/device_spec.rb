@@ -133,6 +133,12 @@ describe Device do
         @subject.set_language("de_DE")
         expect(hash).to eq({'AppleLanguages' => ['de_DE', 'en_US'] })
       end
+
+      it "fails if language is invalid" do
+        hash = { 'AppleLanguages' => ['fr'] }
+        expect(@subject).to receive(:edit_global_preferences).and_yield hash
+        expect { @subject.set_language("de_DE") }.to raise_error(RuntimeError, "de_DE is not a valid language")
+      end
     end
   end
 
