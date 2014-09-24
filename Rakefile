@@ -1,17 +1,5 @@
 $:.unshift "#{File.dirname(__FILE__)}/lib"
-require 'jeweler'
 require 'israkel'
-
-Jeweler::Tasks.new do |gem|
-  gem.name = 'israkel'
-  gem.homepage = 'http://github.com/xing/israkel'
-  gem.license = 'MIT'
-  gem.summary = %Q{Collection of common rake tasks for the iPhone Simulator.}
-  gem.description = %Q{Collection of common rake tasks for the iPhone Simulator like start/stop and some more.}
-  gem.email = ['johannes.plunien@xing.com', 'stefan.munz@xing.com']
-  gem.authors = ['Johannes Plunien', 'Stefan Munz']
-end
-Jeweler::RubygemsDotOrgTasks.new
 
 i = ISRakel::Tasks.instance
 desc "Change keyboard preferences"
