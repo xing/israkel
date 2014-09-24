@@ -72,7 +72,7 @@ describe Tasks do
       :KeyboardCheckSpelling      => false,
       :KeyboardPeriodShortcut     => false,
     }
-    expect(@subject).to receive(:edit_global_preferences).and_yield keyboard_preferences
+    expect(@subject).to receive(:edit_preferences).and_yield keyboard_preferences
 
     @tasks.edit_preferences do |p|
       p.merge!(keyboard_preferences)

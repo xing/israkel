@@ -23,8 +23,12 @@ module ISRakel
       define_stop_task
     end
 
-    def edit_preferences(&block)
+    def edit_global_preferences(&block)
       device_chosen.edit_global_preferences(&block)
+    end
+
+    def edit_preferences(&block)
+      device_chosen.edit_preferences(&block)
     end
 
     private

@@ -96,6 +96,11 @@ class Device
     Helper.edit_plist( File.join(pref_path, '.GlobalPreferences.plist'), &block )
   end
 
+  def edit_preferences(&block)
+    pref_path = File.join(path, 'Library', 'Preferences')
+    Helper.edit_plist( File.join(pref_path, 'com.apple.Preferences.plist'), &block )
+  end
+
   private
 
   def set_gps_access(hash, bundle_id)
