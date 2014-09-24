@@ -73,7 +73,7 @@ describe Device do
     end
 
     it "#stop" do
-      expect(Device).to receive(:sh).with('killall', '-m', '-TERM', 'iOS Simulator')
+      expect(Device).to receive(:exec).with('killall', '-m', '-TERM', 'iOS Simulator')
       Device.stop
     end
 
@@ -144,7 +144,7 @@ describe Device do
     end
 
     it "#start" do
-      expect(@subject).to receive(:sh).with("ios-sim start --devicetypeid \"com.apple.CoreSimulator.SimDeviceType.iPhone-4s, 8.0\"")
+      expect(@subject).to receive(:exec).with("ios-sim start --devicetypeid \"com.apple.CoreSimulator.SimDeviceType.iPhone-4s, 8.0\"")
       @subject.start
     end
 
