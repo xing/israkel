@@ -144,7 +144,7 @@ describe Device do
     end
 
     it "#stop" do
-      expect(@subject).to receive(:sh).with('killall', '-m', '-TERM', 'iPhone Simulator')
+      expect(@subject).to receive(:sh).with('killall', '-m', '-TERM', 'iOS Simulator')
       @subject.stop
     end
 
