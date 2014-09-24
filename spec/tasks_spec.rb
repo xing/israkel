@@ -63,4 +63,20 @@ describe Tasks do
     expect(Device).to receive(:with_sdk_version).with('8.0') { "1" }
     @tasks.send(:select_device)
   end
+
+  it "#global_preferences" do
+    keyboard_preferences = {
+      :KeyboardAutocapitalization => false,
+      :KeyboardAutocorrection     => false,
+      :KeyboardCapsLock           => false,
+      :KeyboardCheckSpelling      => false,
+      :KeyboardPeriodShortcut     => false,
+    }
+    expect(@subject).to receive(:edit_global_preferences).and_yield keyboard_preferences
+
+    @tasks.edit_preferences do |p|
+      p.merge!(keyboard_preferences)
+    end
+
+  end
 end

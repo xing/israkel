@@ -8,6 +8,7 @@ module Helper
     end
     yield content || {}
     if plist
+      plist.value = CFPropertyList.guess(content)
       plist.save(path, CFPropertyList::List::FORMAT_BINARY)
     end
   end

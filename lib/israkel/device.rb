@@ -92,12 +92,12 @@ class Device
     runtime.gsub('com.apple.CoreSimulator.SimRuntime.iOS-', '').gsub('-', '.')
   end
 
-  private
-
   def edit_global_preferences(&block)
     pref_path = File.join(path, 'Library', 'Preferences')
     Helper.edit_plist( File.join(pref_path, '.GlobalPreferences.plist'), &block )
   end
+
+  private
 
   def set_gps_access(hash, bundle_id)
     hash.merge!({

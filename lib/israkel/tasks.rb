@@ -23,6 +23,10 @@ module ISRakel
       define_stop_task
     end
 
+    def edit_preferences(&block)
+      device_chosen.edit_global_preferences(&block)
+    end
+
     private
 
     def bundle_id
