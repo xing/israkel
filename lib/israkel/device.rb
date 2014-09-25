@@ -2,7 +2,6 @@ require 'cfpropertylist'
 require 'sqlite3'
 
 class Device
-
   attr_accessor :UUID, :type, :name, :state, :runtime
 
   def initialize(uuid, type, name, state, runtime)
@@ -29,7 +28,7 @@ class Device
   end
 
   def self.stop
-    exec 'killall', '-m', '-TERM', 'iOS Simulator'
+    system 'killall', '-m', '-TERM', 'iOS Simulator'
   end
 
   def self.all
@@ -67,15 +66,20 @@ class Device
 
   def set_language(language)
     edit_global_preferences do |p|
-      unless p['AppleLanguages'].include?(language)
-        fail "#{language} is not a valid language"
+      if p['AppleLanguages']
+        if p['AppleLanguages'].include?(language)
+          p['AppleLanguages'].unshift(language).uniq!
+        else
+          fail "#{language} is not a valid language"
+        end
+      else
+        p['AppleLanguages'] = [language]
       end
-      p['AppleLanguages'].unshift(language).uniq!
     end
   end
 
   def start
-    exec "ios-sim start --devicetypeid \"#{device_type}\""
+    system "ios-sim start --devicetypeid \"#{device_type}\""
   end
 
   def reset

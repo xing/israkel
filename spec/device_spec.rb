@@ -73,7 +73,7 @@ describe Device do
     end
 
     it "#stop" do
-      expect(Device).to receive(:exec).with('killall', '-m', '-TERM', 'iOS Simulator')
+      expect(Device).to receive(:system).with('killall', '-m', '-TERM', 'iOS Simulator')
       Device.stop
     end
 
@@ -128,16 +128,16 @@ describe Device do
       end
 
       it "writes the language" do
-        hash = { 'AppleLanguages' => ['en_US', 'de_DE'] }
+        hash = { 'AppleLanguages' => ['en', 'de'] }
         expect(@subject).to receive(:edit_global_preferences).and_yield hash
-        @subject.set_language("de_DE")
-        expect(hash).to eq({'AppleLanguages' => ['de_DE', 'en_US'] })
+        @subject.set_language("de")
+        expect(hash).to eq({'AppleLanguages' => ['de', 'en'] })
       end
 
       it "fails if language is invalid" do
         hash = { 'AppleLanguages' => ['fr'] }
         expect(@subject).to receive(:edit_global_preferences).and_yield hash
-        expect { @subject.set_language("de_DE") }.to raise_error(RuntimeError, "de_DE is not a valid language")
+        expect { @subject.set_language("de") }.to raise_error(RuntimeError, "de is not a valid language")
       end
     end
   end
@@ -150,7 +150,7 @@ describe Device do
     end
 
     it "#start" do
-      expect(@subject).to receive(:exec).with("ios-sim start --devicetypeid \"com.apple.CoreSimulator.SimDeviceType.iPhone-4s, 8.0\"")
+      expect(@subject).to receive(:system).with("ios-sim start --devicetypeid \"com.apple.CoreSimulator.SimDeviceType.iPhone-4s, 8.0\"")
       @subject.start
     end
 
