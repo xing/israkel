@@ -156,8 +156,8 @@ describe Device do
 
     it "#reset" do
       sim_path = "spec/fixtures/sim_root_path/EFA1B4B1-5741-4396-AF52-F8AD29229CFC/data"
-      expect(@subject).to receive(:rm_rf).with(sim_path)
-      expect(@subject).to receive(:mkdir).with(sim_path)
+      expect(FileUtils).to receive(:rm_rf).with(sim_path)
+      expect(FileUtils).to receive(:mkdir).with(sim_path)
       @subject.reset
     end
   end
