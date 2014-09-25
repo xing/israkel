@@ -83,8 +83,8 @@ class Device
   end
 
   def reset
-    rm_rf File.join(path)
-    mkdir File.join(path)
+    FileUtils.rm_rf File.join(path)
+    FileUtils.mkdir File.join(path)
   end
 
   def self.sim_root_path
