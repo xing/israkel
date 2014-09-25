@@ -7,7 +7,7 @@ describe Tasks do
     @tasks = ISRakel::Tasks.instance
     plist = CFPropertyList::List.new(:file => "spec/fixtures/device.plist")
     @subject = Device.from_plist(plist)
-    @tasks.device_chosen = @subject
+    @tasks.current_device = @subject
     ENV['BUNDLE_ID'] = 'com.xing.israkel'
   end
 
