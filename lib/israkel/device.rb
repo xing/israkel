@@ -105,6 +105,10 @@ class Device
     Helper.edit_plist( File.join(pref_path, 'com.apple.Preferences.plist'), &block )
   end
 
+  def tcc_path
+    File.join(path, 'Library', 'TCC', 'TCC.db')
+  end
+
   private
 
   def set_gps_access(hash, bundle_id)
@@ -120,7 +124,7 @@ class Device
   end
 
   def allow_tcc_access(service, bundle_id)
-    db_path = File.join(path, 'Library', 'TCC', 'TCC.db')
+    db_path = tcc_path
     db = SQLite3::Database.new(db_path)
     db.prepare "insert into access (service, client, client_type, allowed, prompt_count, csreq) values (?, ?, ?, ?, ?, ?)" do |query|
       query.execute service, bundle_id, 0, 1, 0, ""

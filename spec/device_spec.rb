@@ -168,6 +168,10 @@ describe Device do
     it "#os" do
       expect(@subject.os).to eq('8.0')
     end
+
+    it "#tcc_path" do
+      expect(@subject.tcc_path).to eq("#{ENV['HOME']}/Library/Developer/CoreSimulator/Devices/EFA1B4B1-5741-4396-AF52-F8AD29229CFC/data/Library/TCC/TCC.db")
+    end
   end
 
   context "private methods" do
