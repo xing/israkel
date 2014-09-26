@@ -20,9 +20,9 @@ class Device
     self.from_hash(CFPropertyList.native_types(plist.value))
   end
 
-  def self.with_sdk_version(sdk_version)
+  def self.with_sdk_and_type(sdk_version, type)
     Device.all.each do |device|
-      return device if device.os == sdk_version
+      return device if device.os == sdk_version && device.type.split('.').last == type
     end
     nil
   end

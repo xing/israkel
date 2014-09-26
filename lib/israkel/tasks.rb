@@ -104,7 +104,8 @@ module ISRakel
 
     def select_device
       sdk_version = ENV['IOS_SDK_VERSION']
-      @current_device = Device.with_sdk_version(sdk_version)
+      device_type = ENV['DEVICE_TYPE']
+      @current_device = Device.with_sdk_and_type(sdk_version, device_type)
       return @current_device if @current_device
       choose do |menu|
         menu.prompt = "Please select a simulator"

@@ -60,7 +60,8 @@ describe Tasks do
 
   it "#select_device" do
     ENV['IOS_SDK_VERSION'] = '8.0'
-    expect(Device).to receive(:with_sdk_version).with('8.0') { "1" }
+    ENV['DEVICE_TYPE'] = 'iPhone-4s'
+    expect(Device).to receive(:with_sdk_and_type).with('8.0', 'iPhone-4s') { "1" }
     @tasks.send(:select_device)
   end
 

@@ -34,13 +34,13 @@ describe Device do
       expect(subject.state).to eq(1)
     end
 
-    describe "#with_sdk_version" do
+    describe "#with_sdk_and_type" do
       before do
         allow(Device).to receive(:sim_root_path) { File.join('spec', 'fixtures', 'sim_root_path') }
       end
 
       it "returns device if one is found" do
-        subject = Device.with_sdk_version('8.0')
+        subject = Device.with_sdk_and_type('8.0', 'iPhone-4s')
 
         expect(subject.UUID).to eq('EFA1B4B1-5741-4396-AF52-F8AD29229CFC')
         expect(subject.type).to eq('com.apple.CoreSimulator.SimDeviceType.iPhone-4s')
@@ -50,7 +50,7 @@ describe Device do
       end
 
       it "returns nil if nothing is found" do
-        subject = Device.with_sdk_version('6.0')
+        subject = Device.with_sdk_and_type('6.0', 'iPhone-4s')
         expect(subject).to be_nil
       end
     end
