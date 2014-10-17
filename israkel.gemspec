@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.files = [
     "lib/israkel.rb",
     "lib/israkel/device.rb",
-    "lib/israkel/helper.rb",
     "lib/israkel/tasks.rb",
   ]
   s.homepage = "http://github.com/xing/israkel"

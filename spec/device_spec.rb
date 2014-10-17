@@ -34,6 +34,24 @@ describe Device do
       expect(subject.state).to eq(1)
     end
 
+  describe "#edit_plist" do
+    it "calls the block" do
+      expect { |b| Device.edit_plist('spec/fixtures/madeup.plist', &b) }.to yield_with_args({})
+    end
+
+    it "returns empty hash if file doesn't exist" do
+      Device.edit_plist('spec/fixtures/madeup.plist') do |content|
+        expect(content).to eq({})
+      end
+    end
+
+    it "returns hash" do
+      Device.edit_plist('spec/fixtures/test.plist') do |content|
+        expect(content).to eq({'test' => 'YAAYY'})
+      end
+    end
+  end
+
     describe "#with_sdk_and_type" do
       before do
         allow(Device).to receive(:sim_root_path) { File.join('spec', 'fixtures', 'sim_root_path') }
@@ -101,13 +119,13 @@ describe Device do
 
     describe "#allow_gps_access" do
       it "opens the right plist" do
-        expect(Helper).to receive(:edit_plist).with("#{@subject.send(:path)}/Library/Caches/locationd/clients.plist")
+        expect(Device).to receive(:edit_plist).with("#{@subject.send(:path)}/Library/Caches/locationd/clients.plist")
         @subject.allow_gps_access('com.xing.israkel')
       end
 
       it "allows GPS acces" do
         hash = {}
-        expect(Helper).to receive(:edit_plist).and_yield hash
+        expect(Device).to receive(:edit_plist).and_yield hash
         @subject.allow_gps_access('com.xing.israkel')
         expect(hash).to eq({
           'com.xing.israkel' => {
@@ -123,7 +141,7 @@ describe Device do
 
     describe "#set_language" do
       it "opens the right plist" do
-        expect(Helper).to receive(:edit_plist).with("#{@subject.send(:path)}/Library/Preferences/.GlobalPreferences.plist")
+        expect(Device).to receive(:edit_plist).with("#{@subject.send(:path)}/Library/Preferences/.GlobalPreferences.plist")
         @subject.set_language("de_DE")
       end
 
