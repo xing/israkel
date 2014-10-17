@@ -34,23 +34,23 @@ describe Device do
       expect(subject.state).to eq(1)
     end
 
-  describe "#edit_plist" do
-    it "calls the block" do
-      expect { |b| Device.edit_plist('spec/fixtures/madeup.plist', &b) }.to yield_with_args({})
-    end
+    describe "#edit_plist" do
+      it "calls the block" do
+        expect { |b| Device.edit_plist('spec/fixtures/madeup.plist', &b) }.to yield_with_args({})
+      end
 
-    it "returns empty hash if file doesn't exist" do
-      Device.edit_plist('spec/fixtures/madeup.plist') do |content|
-        expect(content).to eq({})
+      it "returns empty hash if file doesn't exist" do
+        Device.edit_plist('spec/fixtures/madeup.plist') do |content|
+          expect(content).to eq({})
+        end
+      end
+
+      it "returns hash" do
+        Device.edit_plist('spec/fixtures/test.plist') do |content|
+          expect(content).to eq({'test' => 'YAAYY'})
+        end
       end
     end
-
-    it "returns hash" do
-      Device.edit_plist('spec/fixtures/test.plist') do |content|
-        expect(content).to eq({'test' => 'YAAYY'})
-      end
-    end
-  end
 
     describe "#with_sdk_and_type" do
       before do
