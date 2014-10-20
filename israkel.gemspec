@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "israkel"
-  s.version = "0.4.4"
+  s.version = "1.0.0"
   s.require_paths = ["lib"]
   s.authors = ["Johannes Plunien", "Stefan Munz", "Matthias Männich", "Piet Brauer"]
   s.description = "Collection of common rake tasks for the iPhone Simulator like start/stop and some more."
