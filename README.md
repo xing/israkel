@@ -2,6 +2,7 @@
 
 [![Build Status](http://img.shields.io/travis/xing/israkel/master.svg?style=flat-square)](https://travis-ci.org/xing/israkel)
 [![Code Coverage](http://img.shields.io/coveralls/xing/israkel.svg?style=flat-square)](https://coveralls.io/r/xing/israkel)
+[![Dependency Status](https://www.versioneye.com/user/projects/5444b70c53acfa4b0f0000cf/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5444b70c53acfa4b0f0000cf)
 
 
 This gem is a collection of rake tasks for maintaining common tasks
