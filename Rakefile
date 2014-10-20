@@ -17,17 +17,17 @@ end
 
 desc 'Allow AddressBook access'
 task :allow_addressbook_access do
-  i.allow_addressbook_access('com.xing.XING')
+  i.current_device.allow_addressbook_access('com.xing.XING')
 end
 
 desc 'Allow GPS access'
 task :allow_gps_access do
-  i.allow_gps_access('com.xing.XING')
+  i.current_device.allow_gps_access('com.xing.XING')
 end
 
 desc 'Allow Photo Library access'
 task :allow_photos_access do
-  i.allow_photos_access('com.xing.XING')
+  i.current_device.allow_photos_access('com.xing.XING')
 end
 
 desc 'Run the tests'
