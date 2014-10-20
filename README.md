@@ -21,9 +21,9 @@ Besides the gem dependencies, that are automatically resolved and
 installed via bundler, there's only one external dependency to the
 [ios-sim](https://github.com/phonegap/ios-sim) binary. The most
 convenient way to install it is via
-[homebrew](http://mxcl.github.com/homebrew/):
+[npm](https://www.npmjs.org/package/ios-sim):
 
-    brew install ios-sim
+    npm install ios-sim
 
 ## Example Usage
 
@@ -75,24 +75,24 @@ to use KIF to tap on the OK button of the access alert views.
 
     desc 'Allow AddressBook access'
     task :allow_addressbook_access do
-      i.allow_addressbook_access('com.xing.App')
+      i.current_device.allow_addressbook_access('com.xing.App')
     end
 
     desc 'Allow GPS access'
     task :allow_gps_access do
-      i.allow_gps_access('com.xing.App')
+      i.current_device.allow_gps_access('com.xing.App')
     end
 
     desc 'Allow Photo Library access'
     task :allow_photos_access do
-      i.allow_photos_access('com.xing.App')
+      i.current_device.allow_photos_access('com.xing.App')
     end
 
 Even easier, you don't have to define the rake tasks in your Rakefile.
 There are generic tasks that take the environment variable `BUNDLE_ID`
 into account:
 
-    IOS_SDK_VERSION=7.1 BUNDLE_ID=com.example.apple-samplecode.PhotoPicker rake simulator:allow_photos_access
+    DEVICE_TYPE=iPhone-5s IOS_SDK_VERSION=7.1 BUNDLE_ID=com.example.apple-samplecode.PhotoPicker rake simulator:allow_photos_access
 
 ## Feedback
 
