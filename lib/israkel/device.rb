@@ -33,11 +33,8 @@ class Device
   end
 
   def self.shutdown_devices
-    devices = `xcrun simctl list`.split("\n")
-    devices.select! {|entry| entry =~ /(\(Booted\))/}
-    devices.each do |device|
-      device_uuid = device.match(/\(([^\)]+)\)/)[1]
-      system "xcrun simctl shutdown #{device_uuid}"
+    SIMCTL.booted_devices_uuids.each do |uuid|
+      SIMCTL.shutdown(uuid)
     end
   end
 
@@ -105,7 +102,7 @@ class Device
   end
 
   def reset
-    system "xcrun simctl erase #{@UUID}"
+    SIMCTL.erase @UUID
   end
 
   def self.sim_root_path
