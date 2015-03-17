@@ -28,7 +28,17 @@ class Device
   end
 
   def self.stop
+    self.shutdown_devices
     system 'killall', '-m', '-TERM', 'iOS Simulator'
+  end
+
+  def self.shutdown_devices
+    devices = `xcrun simctl list`.split("\n")
+    devices.select! {|entry| entry =~ /(\(Booted\))/}
+    devices.each do |device|
+      device_uuid = device.match(/\(([^\)]+)\)/)[1]
+      system "xcrun simctl shutdown #{device_uuid}"
+    end
   end
 
   def self.all
@@ -95,8 +105,7 @@ class Device
   end
 
   def reset
-    FileUtils.rm_rf File.join(path)
-    FileUtils.mkdir File.join(path)
+    system "xcrun simctl erase #{@UUID}"
   end
 
   def self.sim_root_path
