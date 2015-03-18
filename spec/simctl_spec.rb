@@ -1,7 +1,12 @@
 require 'spec_helper'
 
+module Kernel
+  def `(cmd)
+    "call #{cmd}"
+  end
+end
+
 describe SIMCTL do
- 
   describe "#booted_devices_uuids" do
     before do
       allow(SIMCTL).to receive(:list) { File.readlines(File.join('spec', 'fixtures', 'simctl_list_output.txt')).join("\n") }
