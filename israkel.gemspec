@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "israkel"
-  s.version = "1.0.2"
+  s.version = "1.0.3"
   s.require_paths = ["lib"]
   s.authors = ["Johannes Plunien", "Stefan Munz", "Matthias Männich", "Piet Brauer"]
   s.description = "Collection of common rake tasks for the iPhone Simulator like start/stop and some more."
@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
     "lib/israkel.rb",
     "lib/israkel/device.rb",
     "lib/israkel/tasks.rb",
+    "lib/israkel/simctl.rb"
   ]
   s.homepage = "http://github.com/xing/israkel"
   s.licenses = ["MIT"]
