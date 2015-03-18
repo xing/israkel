@@ -28,7 +28,14 @@ class Device
   end
 
   def self.stop
+    self.shutdown_devices
     system 'killall', '-m', '-TERM', 'iOS Simulator'
+  end
+
+  def self.shutdown_devices
+    SIMCTL.booted_devices_uuids.each do |uuid|
+      SIMCTL.shutdown(uuid)
+    end
   end
 
   def self.all
@@ -95,8 +102,7 @@ class Device
   end
 
   def reset
-    FileUtils.rm_rf File.join(path)
-    FileUtils.mkdir File.join(path)
+    SIMCTL.erase @UUID
   end
 
   def self.sim_root_path

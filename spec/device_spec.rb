@@ -78,6 +78,7 @@ describe Device do
     describe "#all" do
       before do
         allow(Device).to receive(:sim_root_path) { File.join('spec', 'fixtures', 'sim_root_path') }
+        allow(SIMCTL).to receive(:list) { File.readlines(File.join('spec', 'fixtures', 'simctl_list_output.txt')).join("\n") }
       end
 
       it "returns correct number of devices" do
@@ -92,6 +93,9 @@ describe Device do
 
     it "#stop" do
       expect(Device).to receive(:system).with('killall', '-m', '-TERM', 'iOS Simulator')
+      SIMCTL.booted_devices_uuids.each do |uuid|
+        allow(SIMCTL).to receive(:system).with("xcrun simctl shutdown #{uuid}")
+      end
       Device.stop
     end
 
@@ -165,6 +169,7 @@ describe Device do
       @subject = Device.from_hash(@hash)
       @path = File.join('spec', 'fixtures', 'sim_root_path')
       allow(Device).to receive(:sim_root_path) { @path }
+      allow(SIMCTL).to receive(:list) { File.readlines(File.join('spec', 'fixtures', 'simctl_list_output.txt')).join("\n") }
     end
 
     it "#start" do
@@ -173,9 +178,7 @@ describe Device do
     end
 
     it "#reset" do
-      sim_path = "spec/fixtures/sim_root_path/EFA1B4B1-5741-4396-AF52-F8AD29229CFC/data"
-      expect(FileUtils).to receive(:rm_rf).with(sim_path)
-      expect(FileUtils).to receive(:mkdir).with(sim_path)
+      expect(SIMCTL).to receive(:system).with("xcrun simctl erase EFA1B4B1-5741-4396-AF52-F8AD29229CFC")
       @subject.reset
     end
   end
